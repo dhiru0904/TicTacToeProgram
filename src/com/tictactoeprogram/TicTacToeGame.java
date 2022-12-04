@@ -9,7 +9,7 @@ public class TicTacToeGame {
     public static enum Player {
         player1, player2
     };
-    public static char[] createBoard() {
+    public static char[] createBoard() {/*create board method*/
         char[] board = new char[10];
         for (int position = 1; position < 10; position++) {
             board[position] = ' ';
@@ -50,6 +50,16 @@ public class TicTacToeGame {
             board[index] = letterInput;
         }
     }
+    public static boolean isWinner(char[] board, char computer) {
+        return  ((board[1] == computer && board[2] == computer && board[3] == computer)
+                || (board[4] == computer && board[5] == computer && board[6] == computer)
+                || (board[7] == computer && board[8] == computer && board[9] == computer)
+                || (board[1] == computer && board[5] == computer && board[9] == computer)
+                || (board[3] == computer && board[5] == computer && board[7] == computer)
+                || (board[1] == computer && board[4] == computer && board[7] == computer)
+                || (board[2] == computer && board[5] == computer && board[8] == computer)
+                || (board[3] == computer && board[6] == computer && board[9] == computer));
+    }
     private static Player tossWhoStartsFirst() {
         int tossResult = (int) (Math.floor(Math.random() * 10)) % 2;
         if (tossResult == HEAD) {
@@ -72,5 +82,6 @@ public class TicTacToeGame {
         makeMove(board, userMove, getLetterInput);
         showBoard(board);
         Player player = tossWhoStartsFirst();
+        isWinner(board, getLetterInput);
     }
 }
