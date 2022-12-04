@@ -126,14 +126,23 @@ public class TicTacToeGame {
         }
         return 0;
     }
+    public static int chooseCornerPosition(char[] board) {
+        int[] boardCorners = { 1, 3, 7, 9 };
+        for (int position = 0; position < boardCorners.length; position++) {
+            if (isBoardEmpty(board, boardCorners[position]))
+                return position;
+        }
+        return 0;
+    }
     public static void main(String[] args) {
         System.out.println("Welcome to the Tic Tac Toe Game Program");
         Scanner userInput = new Scanner(System.in);
         char[] board = createBoard();
+        String playStarter = tossWhoStartsFirst();
+        System.out.println("Choose X or O");
         char playerInput = userInput.next().charAt(0);
         char computerInput = getInput((playerInput) == 'X' ? 'O' : 'X');
         showBoard(board);
-        String playStarter = tossWhoStartsFirst();
         char player;
         if (playStarter == "player")
             player = playerInput;
@@ -142,16 +151,10 @@ public class TicTacToeGame {
         }
         int userMove = getUserMove(board, userInput);
         makeMove(board, userMove, playerInput);
-        /*
-         checked if the player won
-         */
         if (isWinner(board, playerInput)) {
             System.out.println("player is the winner");
             return;
         }
-        /*
-         computer's turn to move
-         */
         if (computerTurn(board, computerInput, playerInput)) {
             System.out.println("computer is the winner");
             return;
@@ -161,6 +164,8 @@ public class TicTacToeGame {
         } else {
             System.out.println("Change the Turn");
         }
-        int x = denyWinOpponent(board, playerInput);
     }
 }
+
+
+
