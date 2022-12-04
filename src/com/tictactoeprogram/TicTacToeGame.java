@@ -24,27 +24,40 @@ public class TicTacToeGame {
     /*
     check the position
      */
-    public static boolean checkPosition(char[] board, Scanner input) {
-        System.out.println("Enter the user input ");
-        int userInput = input.nextInt();
-        boolean flag = true;
-        while (flag) {
-            if (board[userInput] == ' ') {
-                return flag;
+    public static boolean isBoardEmpty(char[] board, int index) {
+        return board[index] == ' ';
+    }
+    public static int getUserMove(char[] board, Scanner getInput) { /*get user move method*/
+        while (true) {
+            System.out.println("Enter the index you want to move");
+            int index = getInput.nextInt();
+            if ((index > 0 && index < 10) && isBoardEmpty(board, index)) {
+                return index;
+            } else if ((index <= 0 && index >= 10)) {
+                System.out.println("Invalid Index Try Again!!!");
+            } else {
+                System.out.println("Already Occupied");
             }
         }
-        return false;
+    }
+    /*
+     make move to the given index
+     */
+    public static void makeMove(char[] board, int index, char letterInput) {
+        if (isBoardEmpty(board, index)) {
+            board[index] = letterInput;
+        }
     }
     public static void main(String[] args) {
         System.out.println("Welcome to the Tic Tac Toe Game Program");
-        Scanner input = new Scanner(System.in);
-        char givenInput = input.next().charAt(0);
+        Scanner userInput = new Scanner(System.in);
+        char givenInput = userInput.next().charAt(0);
         char[] board = createBoard();
-        char ch = getInput((getInput(givenInput) == 'X' ? 'O' : 'X'));
+        char getLetterInput = getInput((givenInput) == 'X' ? 'O' : 'X');
         showBoard(board);
-        boolean isEmpty = checkPosition(board, input);
-         if (isEmpty) {
-            showBoard(board);
-        }
+        int userMove = getUserMove(board, userInput);
+        showBoard(board);
+        makeMove(board, userMove, getLetterInput);
+        showBoard(board);
     }
 }
